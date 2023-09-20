@@ -1,0 +1,61 @@
+<html>
+<head>
+  <title>Color picker</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+
+  <div class="main">
+
+    <div class="color-model">
+      <form class="color-model-form">
+        <select name="select-model" class="active-color-model" id="color-model-selector">
+          <option value="rgb">RGB</option>
+          <option value="hex">HEX</option>
+          <option value="cmyk">CMYK</option>
+          <option value="hsv">HSV</option>
+        </select>
+      </form>
+    </div>
+
+    <div class="color-picker"></div>
+
+    <div class="options-wrapper">
+
+      <div class="selected-color-div" style="width: 50px; height: 50px; background-color: lightblue;"></div>
+      
+      <form>
+        <div id="fields">
+          <input value="0" type="text" draggable="false" class="inputs" id="fieldA"/>
+          <input value="0" type="text" draggable="false" class="inputs" id="fieldB"/>
+          <input value="0" type="text" draggable="false" class="inputs last" id="fieldC"/>
+          <input value="0" type="text" draggable="false" class="inputs hidden" id="fieldD"/>
+        </div>
+      </form>
+
+      <div class="slider-container">
+        <input value="255" min="0" max="255" 
+        type="range" class="sliders" id="sliderA"/>
+      </div>
+      <div class="slider-container">
+        <input value="0" min="0" max="255" 
+        type="range" class="sliders" id="sliderB"/>
+      </div>
+      <div class="slider-container">
+        <input value="0" min="0" max="255" 
+        type="range" class="sliders" id="sliderC"/>
+      </div>
+      <div class="slider-container">
+        <input value="0" min="0" max="255" 
+        type="range" class="sliders hidden" id="sliderD"/>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <script src="./script.js"></script>
+</body>
+</html>
