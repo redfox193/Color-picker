@@ -2,6 +2,9 @@
 <head>
   <title>Color picker</title>
   <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap" rel="stylesheet">
 </head>
 <body>
   <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
@@ -9,47 +12,62 @@
   <div class="main">
 
     <div class="color-model">
-      <form class="color-model-form">
-        <select name="select-model" class="active-color-model" id="color-model-selector">
-          <option value="rgb">RGB</option>
-          <option value="hex">HEX</option>
-          <option value="cmyk">CMYK</option>
-          <option value="hsv">HSV</option>
+      <form>
+        <select id="color-model-selector">
+          <option class="model-option" value="rgb">RGB</option>
+          <option class="model-option" value="hex">HEX</option>
+          <option class="model-option" value="cmyk">CMYK</option>
+          <option class="model-option" value="hsv">HSV</option>
         </select>
       </form>
     </div>
 
+    
     <div class="color-picker"></div>
 
-    <div class="options-wrapper">
+    <div class="options-wrapper"></div>
 
-      <div class="selected-color-div" style="width: 50px; height: 50px; background-color: lightblue;"></div>
+    <div class="selected-div">
+      <span style="width: 70px; text-align: center; padding-top: 10px;">CLICK -> </span>
+        <div class="selected-color-div" id="colorDiv"></div>
+      <span style="width: 70px; text-align: center; padding-top: 10px;">to COPY</span>
+    </div>
+    
       
-      <form>
-        <div id="fields">
-          <input value="0" type="text" draggable="false" class="inputs" id="fieldA"/>
-          <input value="0" type="text" draggable="false" class="inputs" id="fieldB"/>
-          <input value="0" type="text" draggable="false" class="inputs last" id="fieldC"/>
-          <input value="0" type="text" draggable="false" class="inputs hidden" id="fieldD"/>
-        </div>
-      </form>
-
-      <div class="slider-container">
-        <input value="255" min="0" max="255" 
-        type="range" class="sliders" id="sliderA"/>
+    <div id="fields">
+      <div class="input-wrapper" id="wrapperA">
+        <span id="labelA">R</span><input value="0" type="text" draggable="false" class="inputs" id="fieldA"/>
       </div>
-      <div class="slider-container">
+      <div class="input-wrapper" id="wrapperB">
+        <span id="labelB">G</span><input value="0" type="text" draggable="false" class="inputs" id="fieldB"/>
+      </div>
+      <div class="input-wrapper" id="wrapperC">
+        <span id="labelC">B</span><input value="0" type="text" draggable="false" class="inputs" id="fieldC"/>
+      </div>
+      <div class="input-wrapper hidden" id="wrapperD">
+        <span>K</span><input value="0" type="text" draggable="false" class="inputs" id="fieldD"/>
+      </div>
+      <input value="0" type="text" draggable="false" class="inputs hidden" style="width: 70px;" id="hexField"/>
+    </div>
+
+    <div class="main-slider-container">
+      <div class="slider-container" id="swrapperA">
+        <input value="255" min="0" max="255" 
+          type="range" class="sliders" id="sliderA"/>
+      </div>
+      <div class="slider-container" id="swrapperB">
         <input value="0" min="0" max="255" 
         type="range" class="sliders" id="sliderB"/>
       </div>
-      <div class="slider-container">
+      <div class="slider-container" id="swrapperC">
         <input value="0" min="0" max="255" 
         type="range" class="sliders" id="sliderC"/>
       </div>
-      <div class="slider-container">
+      <div class="slider-container hidden" id="swrapperD">
         <input value="0" min="0" max="255" 
-        type="range" class="sliders hidden" id="sliderD"/>
+        type="range" class="sliders" id="sliderD"/>
       </div>
+    </div>
 
     </div>
 

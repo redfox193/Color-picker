@@ -182,13 +182,28 @@ const fieldA = document.getElementById("fieldA");
 const fieldB = document.getElementById("fieldB");
 const fieldC = document.getElementById("fieldC");
 const fieldD = document.getElementById("fieldD");
+const hexField = document.getElementById("hexField");
 const fields = document.getElementById('fields');
+
+const wrapperA = document.getElementById("wrapperA");
+const wrapperB = document.getElementById("wrapperB");
+const wrapperC = document.getElementById("wrapperC");
+const wrapperD = document.getElementById("wrapperD");
+
+const labelA = document.getElementById("labelA");
+const labelB = document.getElementById("labelB");
+const labelC = document.getElementById("labelC");
 
 const sliderA = document.getElementById("sliderA");
 const sliderB = document.getElementById("sliderB");
 const sliderC = document.getElementById("sliderC");
 const sliderD = document.getElementById("sliderD");
 const sliders = document.getElementById('sliders');
+
+const swrapperA = document.getElementById("swrapperA");
+const swrapperB = document.getElementById("swrapperB");
+const swrapperC = document.getElementById("swrapperC");
+const swrapperD = document.getElementById("swrapperD");
 
 const inputs = document.querySelectorAll('.inputs');
 inputs.forEach(function(input) {
@@ -288,11 +303,11 @@ function validateRGB() {
 
 //HEX
 function setHEX() {
-  fieldA.value = colorPicker.color.hexString;
+  hexField.value = colorPicker.color.hexString;
 }
 
 function validateHex() {
-  h = validateHexColor(fieldA.value);
+  h = validateHexColor(hexField.value);
   if(h != "NaN")
     colorPicker.color.hexString = h;
   setHEX();
@@ -357,51 +372,57 @@ function validateHSV() {
 
 modelSelector.addEventListener('change', () => {
   const selectedModel = modelSelector.value;
+  fields.style.width = "200px";
   if(selectedModel != "hex" &&  selectedModel != "cmyk")
   {
-    fieldB.classList.remove('hidden');
-    fieldC.classList.remove('hidden');
-    fieldD.classList.add('hidden');
+    wrapperA.classList.remove('hidden');
+    wrapperB.classList.remove('hidden');
+    wrapperC.classList.remove('hidden');
+    wrapperD.classList.add('hidden');
+    hexField.classList.add('hidden');
 
-    sliderA.classList.remove('hidden');
-    sliderB.classList.remove('hidden');
-    sliderC.classList.remove('hidden');
-    sliderD.classList.add('hidden');
+    swrapperA.classList.remove('hidden');
+    swrapperB.classList.remove('hidden');
+    swrapperC.classList.remove('hidden');
+    swrapperD.classList.add('hidden');
 
     sliderA.max = sliderB.max = sliderC.max = 255;
 
-    fieldA.classList.remove('last');
-    fieldD.classList.remove('last');
-    fieldC.classList.add('last');
+    labelA.textContent = "R"
+    labelB.textContent = "G"
+    labelC.textContent = "B"
   }
   else if(selectedModel == "hex")
   {
-    fieldB.classList.add('hidden');
-    fieldC.classList.add('hidden');
-    fieldD.classList.add('hidden');
+    wrapperA.classList.add('hidden');
+    wrapperB.classList.add('hidden');
+    wrapperC.classList.add('hidden');
+    wrapperD.classList.add('hidden');
 
-    sliderA.classList.add('hidden');
-    sliderB.classList.add('hidden');
-    sliderC.classList.add('hidden');
-    sliderD.classList.add('hidden');
+    swrapperA.classList.add('hidden');
+    swrapperB.classList.add('hidden');
+    swrapperC.classList.add('hidden');
+    swrapperD.classList.add('hidden');
 
-    fieldC.classList.remove('last');
-    fieldD.classList.remove('last');
-    fieldA.classList.add('last');
+    hexField.classList.remove('hidden');
   }
   else {
-    fieldB.classList.remove('hidden');
-    fieldC.classList.remove('hidden');
-    fieldD.classList.remove('hidden');
+    wrapperA.classList.remove('hidden');
+    wrapperB.classList.remove('hidden');
+    wrapperC.classList.remove('hidden');
+    wrapperD.classList.remove('hidden');
+    hexField.classList.add('hidden');
 
-    sliderA.classList.remove('hidden');
-    sliderB.classList.remove('hidden');
-    sliderC.classList.remove('hidden');
-    sliderD.classList.remove('hidden');
+    swrapperA.classList.remove('hidden');
+    swrapperB.classList.remove('hidden');
+    swrapperC.classList.remove('hidden');
+    swrapperD.classList.remove('hidden');
 
-    fieldA.classList.remove('last');
-    fieldC.classList.remove('last');
-    fieldD.classList.add('last');
+    labelA.textContent = "C"
+    labelB.textContent = "M"
+    labelC.textContent = "Y"
+
+    fields.style.width = "260px";
   }
 
   if(selectedModel == "cmyk")
@@ -410,6 +431,10 @@ modelSelector.addEventListener('change', () => {
   if(selectedModel == "hsv") {
     sliderA.max = 360;
     sliderB.max = sliderC.max = 100;
+
+    labelA.textContent = "H"
+    labelB.textContent = "S"
+    labelC.textContent = "V"
   }
 
   syncFields()
@@ -436,3 +461,34 @@ sliderD.oninput = function() {
   syncColorPicker();
 }
 
+
+var colorDiv = document.getElementById("colorDiv");
+
+colorDiv.addEventListener("click", function(event) {
+  var textToCopy = "";
+  switch (modelSelector.value) {
+    case "rgb":
+      textToCopy = colorPicker.color.rgbString;
+      break;
+    case "hex":
+      textToCopy = colorPicker.color.hexString;
+      break;
+    case "cmyk":
+      textToCopy = "cmyk(" +
+       fieldA.value + "%, " + 
+       fieldB.value + "%, " + 
+       fieldC.value + "%, " + 
+       fieldD.value + "%)";
+      break;
+    case "hsv":
+      textToCopy = "hsv(" +
+       fieldA.value + ", " + 
+       fieldB.value + "%, " + 
+       fieldC.value + "%)";
+      break;
+    default:
+      break;
+  }
+  navigator.clipboard.writeText(textToCopy);
+  navigator.clipboard.writeText(textToCopy);
+});
