@@ -252,6 +252,9 @@ function syncFields() {
     case "hsv":
       setHSV();
       break;
+    case "hsl":
+      setHSL();
+      break;
     default:
       break;
   }
@@ -271,6 +274,9 @@ function syncColorPicker() {
     case "hsv":
       validateHSV();
       break;
+    case "hsl":
+      validateHSL();
+    break;
     default:
       break;
   }
@@ -370,6 +376,33 @@ function validateHSV() {
   setHSV();
 }
 
+
+//HSL
+function setHSL() {
+  fieldA.value = Math.round(colorPicker.color.hsl.h);
+  fieldB.value = Math.round(colorPicker.color.hsl.s);
+  fieldC.value = Math.round(colorPicker.color.hsl.l);
+
+  sliderA.value = fieldA.value;
+  sliderB.value = fieldB.value;
+  sliderC.value = fieldC.value;
+}
+
+function validateHSL() {
+  h = validateNumber(0, 360, fieldA.value);
+  s = validateNumber(0, 100, fieldB.value);
+  l = validateNumber(0, 100, fieldC.value);
+
+  if (!isNaN(h) && !isNaN(s) && !isNaN(l)) {
+    let col = new window.iro.Color({h:h, s:s, l:l});
+    colorPicker.color.hsl = col.hsl;
+  }
+
+  setHSL();
+}
+
+
+
 modelSelector.addEventListener('change', () => {
   const selectedModel = modelSelector.value;
   fields.style.width = "200px";
@@ -406,7 +439,8 @@ modelSelector.addEventListener('change', () => {
 
     hexField.classList.remove('hidden');
   }
-  else {
+  else
+  {
     wrapperA.classList.remove('hidden');
     wrapperB.classList.remove('hidden');
     wrapperC.classList.remove('hidden');
@@ -428,13 +462,16 @@ modelSelector.addEventListener('change', () => {
   if(selectedModel == "cmyk")
     sliderA.max = sliderB.max = sliderC.max = sliderD.max = 100;
 
-  if(selectedModel == "hsv") {
+  if(selectedModel == "hsv" || selectedModel == "hsl") {
     sliderA.max = 360;
     sliderB.max = sliderC.max = 100;
 
     labelA.textContent = "H"
     labelB.textContent = "S"
-    labelC.textContent = "V"
+    if(selectedModel == "hsv")
+      labelC.textContent = "V"
+    else
+      labelC.textContent = "L"
   }
 
   syncFields()
@@ -482,6 +519,12 @@ colorDiv.addEventListener("click", function(event) {
       break;
     case "hsv":
       textToCopy = "hsv(" +
+       fieldA.value + ", " + 
+       fieldB.value + "%, " + 
+       fieldC.value + "%)";
+      break;
+    case "hsl":
+      textToCopy = "hsl(" +
        fieldA.value + ", " + 
        fieldB.value + "%, " + 
        fieldC.value + "%)";
